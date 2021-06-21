@@ -11,7 +11,12 @@ FROM node:14-alpine
 ENV NODE_ENV=production
 WORKDIR /usr/src/app
 COPY ["package.json", "yarn.lock", "./"]
-RUN yarn install --production
+RUN apk --no-cache --virtual build-dependencies add \
+  python \
+  make \
+  g++ \
+  && yarn install --production \
+  && apk del build-dependencies
 COPY --from=builder /usr/src/app/build .
 EXPOSE 5000
 
