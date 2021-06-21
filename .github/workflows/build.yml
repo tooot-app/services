@@ -1,0 +1,56 @@
+name: Build packages
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'packages/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        package: [push, translate]
+    steps:
+      - name: -- Step 1 -- Checkout code
+        uses: actions/checkout@v2
+      - name: -- Step 2 -- Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - name: -- Step 3 -- Get diff
+        uses: technote-space/get-diff-action@v4
+        with:
+          PATTERNS: |
+            packages/${{ matrix.package }}/package.json
+      - name: -- Step 4 -- Login to GitHub Container Registry
+        if: env.GIT_DIFF
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: -- Step 5 -- Set up QEMU
+        if: env.GIT_DIFF
+        uses: docker/setup-qemu-action@v1
+      - name: -- Step 6 -- Set up Docker Buildx
+        if: env.GIT_DIFF
+        uses: docker/setup-buildx-action@v1
+      - name: -- Step 7 -- Get version
+        if: env.GIT_DIFF
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@master
+        with:
+          path: ${{ matrix.package }}
+      - name: -- Step 8 -- Build and push
+        if: env.GIT_DIFF
+        uses: docker/build-push-action@v2
+        with:
+          context: ${{ matrix.package }}
+          push: true
+          platforms:
+            - linux/arm64
+          tags: |
+            ghcr.io/tooot-app/${{ matrix.package }}:latest
+            ghcr.io/tooot-app/${{ matrix.package }}:${{ steps.package-version.outputs.current-version}}

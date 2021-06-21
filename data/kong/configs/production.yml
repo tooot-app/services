@@ -1,0 +1,55 @@
+_format_version: '2.1'
+_transform: true
+
+plugins:
+  - name: key-auth
+    route: push
+    config:
+      anonymous: server-push
+      key_names:
+        - x-tooot-key
+
+consumers:
+  - username: apps
+    keyauth_credentials:
+      - key: # Update this field
+  - username: server-push
+
+services:
+  - name: Push
+    url: http://push:5000
+    routes:
+      - name: push
+        paths:
+          - /push
+        protocols:
+          - https
+        methods:
+          - GET
+          - POST
+      - name: server-push
+        paths:
+          - /push/send/(?<ALL>\S+)
+          - /v1/push3/(?<ALL>\S+) # Legacy
+        plugins:
+          - name: key-auth
+            config:
+              anonymous: server-push
+          - name: request-transformer
+            config:
+              replace:
+                uri: /send/$(uri_captures.ALL)
+        protocols:
+          - https
+        methods:
+          - POST
+  - name: Translate
+    url: http://translate:5001
+    routes:
+      - name: translate
+        protocols:
+          - https
+        methods:
+          - GET
+        paths:
+          - /translate

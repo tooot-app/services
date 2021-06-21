@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  kong:
+    image: kong:2
+    networks:
+      - usekong
+    ports:
+      - 8000:80
+    env_file: .env
+    volumes:
+      - ./data/kong/configs/development.yml:/usr/local/kong/declarative/kong.yml
+      - ./data/kong/certs:/usr/local/kong/certs:ro
+
+networks:
+  usekong:

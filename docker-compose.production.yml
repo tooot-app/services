@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  kong:
+    restart: always
+    ports:
+      - 8443:443
+    volumes:
+      - ./data/kong/configs/production.yml:/usr/local/kong/declarative/kong.yml
+  push:
+    image: tooot/push:latest
+    restart: always
+    networks:
+      - usekong
+    env_file: ./packages/push/.env
+  translate:
+    image: tooot/translate:latest
+    restart: always
+    networks:
+      - usekong
+    env_file: ./packages/translate/.env

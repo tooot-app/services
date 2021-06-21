@@ -1,0 +1,40 @@
+{
+   "name": "tooot-push",
+   "version": "0.9.0",
+   "engines": {
+      "node": "14.x",
+      "yarn": "1.x"
+   },
+   "description": "Push relay service for tooot",
+   "author": "xmflsct <me@xmflsct.com>",
+   "license": "GPL-3.0-or-later",
+   "scripts": {
+      "dev": "nodemon",
+      "build": "tsc",
+      "start": "node build/index.js"
+   },
+   "dependencies": {
+      "@koa/router": "^10.0.0",
+      "better-sqlite3": "^7.4.1",
+      "expo-server-sdk": "^3.6.0",
+      "koa": "^2.13.1",
+      "koa-bodyparser": "^4.3.0",
+      "koa-logger": "^3.2.1",
+      "loglevel": "^1.7.1",
+      "newrelic": "^7.5.0",
+      "node-cron": "^3.0.0",
+      "typeorm": "^0.2.34"
+   },
+   "devDependencies": {
+      "@types/koa": "^2.13.3",
+      "@types/koa-bodyparser": "^4.3.1",
+      "@types/koa-logger": "^3.1.1",
+      "@types/koa__router": "^8.0.4",
+      "@types/node": "^15.12.4",
+      "@types/node-cron": "^2.0.3",
+      "dotenv": "^10.0.0",
+      "nodemon": "^2.0.7",
+      "ts-node": "^10.0.0",
+      "typescript": "^4.3.4"
+   }
+}

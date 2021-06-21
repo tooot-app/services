@@ -1,0 +1,58 @@
+_format_version: '2.1'
+_transform: true
+
+plugins:
+  - name: key-auth
+    route: push
+    config:
+      anonymous: server-push
+      key_names:
+        - x-tooot-key
+
+consumers:
+  - username: apps
+    keyauth_credentials:
+      - key: thisisatest
+  - username: server-push
+
+services:
+  - name: Push
+    url: http://host.docker.internal:5000
+    routes:
+      - name: push
+        paths:
+          - /push
+        protocols:
+          - http
+          - https
+        methods:
+          - GET
+          - POST
+      - name: server-push
+        paths:
+          - /push/send/(?<ALL>\S+)
+          - /v1/push3/(?<ALL>\S+) # Legacy
+        plugins:
+          - name: key-auth
+            config:
+              anonymous: server-push
+          - name: request-transformer
+            config:
+              replace:
+                uri: /send/$(uri_captures.ALL)
+        protocols:
+          - http
+          - https
+        methods:
+          - POST
+  - name: Translate
+    url: http://host.docker.internal:5001
+    routes:
+      - name: translate
+        protocols:
+          - http
+          - https
+        methods:
+          - GET
+        paths:
+          - /translate
