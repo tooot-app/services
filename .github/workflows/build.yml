@@ -49,7 +49,7 @@ jobs:
         if: env.GIT_DIFF
         uses: docker/build-push-action@v2
         with:
-          context: ${{ matrix.package }}
+          context: packages/${{ matrix.package }}
           push: true
           platforms: |
             linux/arm64
