@@ -3,8 +3,8 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'packages/**'
+    # paths:
+    #   - 'packages/**'
 
 jobs:
   build:
@@ -34,6 +34,8 @@ jobs:
       - name: -- Step 5 -- Set up QEMU
         if: env.GIT_DIFF
         uses: docker/setup-qemu-action@v1
+        with:
+          platforms: arm64
       - name: -- Step 6 -- Set up Docker Buildx
         if: env.GIT_DIFF
         uses: docker/setup-buildx-action@v1
@@ -49,8 +51,8 @@ jobs:
         with:
           context: ${{ matrix.package }}
           push: true
-          platforms:
-            - linux/arm64
+          platforms: |
+            linux/arm64
           tags: |
             ghcr.io/tooot-app/${{ matrix.package }}:latest
             ghcr.io/tooot-app/${{ matrix.package }}:${{ steps.package-version.outputs.current-version}}
