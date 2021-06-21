@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 COPY ["package.json", "yarn.lock", "tsconfig.json", "./"]
 COPY ["src", "./src"]
 RUN apk add python3 make gcc g++
-RUN yarn install --production
+RUN yarn install
 RUN yarn build
 
 FROM node:14-alpine
