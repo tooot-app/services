@@ -3,7 +3,12 @@ FROM node:14-alpine AS builder
 WORKDIR /usr/src/app
 COPY ["package.json", "yarn.lock", "tsconfig.json", "./"]
 COPY ["src", "./src"]
-RUN yarn install
+RUN apk --no-cache --virtual build-dependencies add \
+  python \
+  make \
+  g++ \
+  && yarn install \
+  && apk del build-dependencies
 RUN yarn build
 
 FROM node:14-alpine
