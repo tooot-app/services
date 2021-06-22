@@ -44,7 +44,7 @@ services:
         methods:
           - POST
   - name: Translate
-    url: http://translate:5001
+    url: http://translate:5000
     routes:
       - name: translate
         protocols:

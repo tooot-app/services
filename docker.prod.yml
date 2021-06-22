@@ -7,7 +7,7 @@ services:
     networks:
       - usekong
     ports:
-      - 8443:443
+      - 443:8443
     env_file: .env
     volumes:
       - ./data/kong/configs/production.yml:/usr/local/kong/declarative/kong.yml
