@@ -29,6 +29,7 @@ const useIBM = async (ctx: Koa.Context, next: Koa.Next) => {
 
     try {
       const res = await languageTranslator.translate({
+        source,
         text,
         target: target.slice(0, 2)
       })

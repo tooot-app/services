@@ -27,15 +27,15 @@ services:
       - usekong
       - usetranslate
     env_file: ./packages/translate/.env
-  libretranslate:
-    image: libretranslate/libretranslate:latest
-    restart: always
-    networks:
-      - usetranslate
-    volumes:
-      - ./data/libretranslate/LibreTranslate:/root/.local/share/LibreTranslate
-      - ./data/libretranslate/argos-translate:/root/.local/share/argos-translate
-    command: --frontend-language-target en
+  # libretranslate:
+  #   image: libretranslate/libretranslate:latest
+  #   restart: always
+  #   networks:
+  #     - usetranslate
+  #   volumes:
+  #     - ./data/libretranslate/LibreTranslate:/root/.local/share/LibreTranslate
+  #     - ./data/libretranslate/argos-translate:/root/.local/share/argos-translate
+  #   command: --frontend-language-target en
 
 networks:
   usekong:
