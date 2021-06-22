@@ -19,6 +19,8 @@ services:
     networks:
       - usekong
     env_file: ./packages/push/.env
+    volumes:
+      - ./data/push:/usr/local/data
 
   translate:
     image: ghcr.io/tooot-app/translate:latest
