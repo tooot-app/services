@@ -16,6 +16,16 @@ consumers:
   - username: server-push
 
 services:
+  - name: Status
+    url: http://localhost:8001/status
+    routes:
+      - name: status
+        protocols:
+          - https
+        methods:
+          - GET
+        paths:
+          - /status
   - name: Push
     url: http://push:5000
     routes:
