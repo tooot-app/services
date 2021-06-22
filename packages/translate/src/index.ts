@@ -7,7 +7,6 @@ import log from 'loglevel'
 import { crons } from './cron'
 import prepareOriginal from './prepareOriginal'
 import returnStatus from './returnStatus'
-import useAzure from './useAzure'
 import useDeepL from './useDeepL'
 import useIBM from './useIBM'
 import useLibre from './useLibre'
@@ -18,13 +17,6 @@ type Stats = {
     limit: number
   }
   languages: string[]
-}
-export const AZURE_STATS: Stats = {
-  counts: {
-    current: 0,
-    limit: 2000000
-  },
-  languages: []
 }
 export const DEEPL_STATS: Stats = {
   counts: {
@@ -59,7 +51,6 @@ const main = async () => {
     // <- { provider: string, sourceLanguage: string, text: string[] }
     prepareOriginal,
     useIBM,
-    useAzure,
     useDeepL,
     useLibre
   )
