@@ -12,18 +12,32 @@ services:
     volumes:
       - ./data/kong/configs/production.yml:/usr/local/kong/declarative/kong.yml
       - ./data/kong/certs:/usr/local/kong/certs:ro
+
   push:
     image: ghcr.io/tooot-app/push:latest
     restart: always
     networks:
       - usekong
     env_file: ./packages/push/.env
+
   translate:
     image: ghcr.io/tooot-app/translate:latest
     restart: always
     networks:
       - usekong
+      - usetranslate
     env_file: ./packages/translate/.env
+  libretranslate:
+    image: libretranslate/libretranslate:latest
+    restart: always
+    networks:
+      - usetranslate
+    volumes:
+      - ./data/libretranslate/LibreTranslate:/root/.local/share/LibreTranslate
+      - ./data/libretranslate/argos-translate:/root/.local/share/argos-translate
+    command: --frontend-language-target en
 
 networks:
   usekong:
+  usetranslate:
+    internal: true
