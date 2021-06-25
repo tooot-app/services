@@ -6,7 +6,11 @@ import { ExpoToken } from '../entity/ExpoToken'
 import { ServerAndAccount } from '../entity/ServerAndAccount'
 
 const checkTokens = async (ctx: Koa.Context, next: Koa.Next) => {
-  const expoToken: ExpoToken['expoToken'] = ctx.params.expoToken
+  const expoToken: ExpoToken['expoToken'] = ctx.params.expoToken.includes(
+    'ExponentPushToken'
+  )
+    ? ctx.params.expoToken
+    : `ExponentPushToken[${ctx.params.expoToken}]`
   const instanceUrl: ServerAndAccount['instanceUrl'] = ctx.params.instanceUrl
   const accountId: ServerAndAccount['accountId'] = ctx.params.accountId
 
