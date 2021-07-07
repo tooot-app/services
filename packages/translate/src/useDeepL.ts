@@ -49,7 +49,8 @@ const useDeepL = async (ctx: Koa.Context, next: Koa.Next) => {
       }
     } catch (err) {
       log.info('DeepL', err.response.data?.error)
-      await next()
+      ctx.throw(500)
+      // await next()
     }
   }
 }

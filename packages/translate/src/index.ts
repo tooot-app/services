@@ -51,8 +51,8 @@ const main = async () => {
     // <- { provider: string, sourceLanguage: string, text: string[] }
     prepareOriginal,
     useIBM,
-    useDeepL,
-    useLibre
+    useDeepL
+    // useLibre
   )
 
   app.use(router.routes())

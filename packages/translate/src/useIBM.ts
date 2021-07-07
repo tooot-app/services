@@ -31,7 +31,7 @@ const useIBM = async (ctx: Koa.Context, next: Koa.Next) => {
       const res = await languageTranslator.translate({
         source,
         text,
-        target: target.slice(0, 2)
+        ...(target != 'undefined' && { target: target.slice(0, 2) })
       })
       log.debug('IBM', 'Translated')
       ctx.response.body = {
