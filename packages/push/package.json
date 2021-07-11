@@ -1,6 +1,6 @@
 {
    "name": "tooot-push",
-   "version": "1.0.1",
+   "version": "1.1.0",
    "engines": {
       "node": "14.x",
       "yarn": "1.x"
@@ -15,6 +15,7 @@
    },
    "dependencies": {
       "@koa/router": "^10.0.0",
+      "@sentry/node": "^6.8.0",
       "better-sqlite3": "^7.4.1",
       "expo-server-sdk": "^3.6.0",
       "koa": "^2.13.1",

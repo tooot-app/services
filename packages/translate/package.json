@@ -1,6 +1,6 @@
 {
    "name": "tooot-translate",
-   "version": "1.0.1",
+   "version": "1.1.0",
    "engines": {
       "node": "14.x",
       "yarn": "1.x"
@@ -15,6 +15,7 @@
    },
    "dependencies": {
       "@koa/router": "^10.0.0",
+      "@sentry/node": "^6.8.0",
       "axios": "^0.21.1",
       "ibm-platform-services": "^0.18.11",
       "ibm-watson": "^6.1.1",

@@ -1,5 +1,6 @@
 process.env.NODE_ENV === 'production' && require('newrelic')
 
+import * as Sentry from '@sentry/node'
 import Koa from 'koa'
 import bodyParser from 'koa-bodyparser'
 import logger from 'koa-logger'
@@ -18,6 +19,16 @@ export const URL = `https://${DOMAIN}/${PREFIX}`
 if (!process.env.EXPO_ACCESS_TOKEN_PUSH) {
   throw new Error('Missing Expo access token')
 }
+
+if (!process.env.SENTRY_DSN) {
+  throw new Error('Missing Sentry DSN')
+}
+
+Sentry.init({
+  dsn: process.env.SENTRY_DSN,
+  enabled: process.env.NODE_ENV === 'production',
+  debug: process.env.NODE_ENV !== 'production'
+})
 
 const main = async () => {
   // Setup SQLite3

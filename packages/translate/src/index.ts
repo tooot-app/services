@@ -1,6 +1,7 @@
 process.env.NODE_ENV === 'production' && require('newrelic')
 
 import Router from '@koa/router'
+import * as Sentry from '@sentry/node'
 import Koa from 'koa'
 import logger from 'koa-logger'
 import log from 'loglevel'
@@ -10,6 +11,16 @@ import returnStatus from './returnStatus'
 import useDeepL from './useDeepL'
 import useIBM from './useIBM'
 import useLibre from './useLibre'
+
+if (!process.env.SENTRY_DSN) {
+  throw new Error('Missing Sentry DSN')
+}
+
+Sentry.init({
+  dsn: process.env.SENTRY_DSN,
+  enabled: process.env.NODE_ENV === 'production',
+  debug: process.env.NODE_ENV !== 'production'
+})
 
 type Stats = {
   counts: {
